@@ -1,7 +1,7 @@
 # NHL Game Outcome Analysis
 
 ## Project Overview
-This project explores whether NHL team performance statistics can be used to classify game outcomes and identify which in-game metrics are most associated with winning.
+This project explores how NHL team performance statistics can be used to classify game outcomes and identify which in-game metrics are most associated with winning.
 
 Using historical NHL game data, I combined multiple datasets, cleaned and prepared the data, trained machine learning classification models, and compared their performance across different feature sets.
 
@@ -16,7 +16,8 @@ The goal of the project was to:
 - Visualize and interpret model results
 
 ## Dataset
-The data comes from the **NHL Game Data** dataset available on Kaggle.
+
+The data comes from the [NHL Game Data dataset on Kaggle](https://www.kaggle.com/datasets/martinellis/nhl-game-data/data).
 
 The project combines information from:
 
@@ -53,6 +54,7 @@ The project evaluates NHL team statistics including:
 - Shots
 - Hits
 - Penalty minutes
+- Power-play opportunities
 - Faceoff win percentage
 - Giveaways
 - Takeaways
@@ -73,25 +75,65 @@ The project also compares Decision Tree and Random Forest results across differe
 
 ## Results
 
-The Decision Tree and Random Forest models were compared across multiple feature sets using accuracy and confusion matrices.
+The models were evaluated across several feature sets using accuracy and confusion matrices.
 
-The Random Forest model generally provided stronger classification performance and was also used to evaluate feature importance across NHL team statistics.
+| Feature Set | Decision Tree Accuracy | Random Forest Accuracy |
+|---|---:|---:|
+| 8 features | 76.36% | 78.50% |
+| 7 features | 76.34% | **79.09%** |
+| 4 features | 74.66% | 75.41% |
+| 3 features | **74.12%** | 73.89% |
 
-Specific model accuracy results and feature importance findings are available in the notebook.
+The strongest model was the **Random Forest classifier using seven features**, which achieved **79.09% accuracy**.
+
+The seven features were:
+
+- Shots
+- Hits
+- Penalty minutes
+- Faceoff win percentage
+- Giveaways
+- Takeaways
+- Blocked shots
+
+Removing power-play opportunities slightly improved Random Forest performance from **78.50% to 79.09%**, suggesting that this variable added limited predictive value within this feature set.
+
+### Best Model Confusion Matrix
+
+The best-performing Random Forest model produced:
+
+- 3,116 correctly classified losses
+- 3,124 correctly classified wins
+- 791 losses incorrectly classified as wins
+- 859 wins incorrectly classified as losses
+
+This shows relatively balanced classification performance across wins and losses.
+
+## Feature Importance
+
+For the full Random Forest model, the most influential features were:
+
+| Feature | Importance |
+|---|---:|
+| Faceoff Win Percentage | 18.00% |
+| Shots | 14.07% |
+| Hits | 13.60% |
+| Blocked Shots | 12.81% |
+| Giveaways | 12.80% |
+| Penalty Minutes | 11.12% |
+| Takeaways | 9.87% |
+| Power-Play Opportunities | 7.73% |
+
+**Faceoff win percentage** was the most influential feature in both the Random Forest and Decision Tree models, while power-play opportunities had the lowest importance among the eight variables analyzed.
 
 ## Key Takeaways
 
-This project demonstrates an end-to-end machine learning workflow including:
-
-1. Downloading data from an external source
-2. Combining multiple datasets
-3. Cleaning and validating records
-4. Selecting and engineering model features
-5. Splitting data into training and testing sets
-6. Training classification models
-7. Evaluating model performance
-8. Comparing feature importance
-9. Visualizing analytical results
+- Random Forest generally outperformed the Decision Tree across the tested feature sets.
+- The strongest model achieved **79.09% accuracy** using seven team-performance statistics.
+- Removing power-play opportunities slightly improved model accuracy, suggesting that additional features do not always improve classification performance.
+- Faceoff win percentage was the most influential variable in both models.
+- Model performance declined as the feature set was reduced further, showing that several game statistics contributed useful information.
+- The project demonstrates how feature selection can affect both model performance and interpretability.
 
 ## Future Improvements
 
